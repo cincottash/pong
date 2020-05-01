@@ -41,8 +41,6 @@ def main():
 		updatePlayerOne(playerOne)
 		#updatePlayerTwo(playerTwo)
 		updateBall(canvas, ballOne, playerOne)
-
-		
 		
 		pygame.display.update()
 
@@ -66,7 +64,6 @@ def updateBall(canvas, ball, player):
 				break
 	dx = ball.velocity * math.cos(ball.theta)
 	dy = ball.velocity * math.sin(ball.theta)
-				#Now determine what part of the paddle the ball hit
 
 	#Check for collision with bottom of screen
 	if(ball.y + dy >= canvasHeight - ball.radius):
