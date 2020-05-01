@@ -8,4 +8,4 @@ class Ball:
 		self.radius = 10
 		self.type = "Ball"
 		self.theta = random.randint(0, 360)
-		self.velocity = 0.5
+		self.velocity = 1

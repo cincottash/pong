@@ -3,8 +3,11 @@ from globals import *
 from player import Player
 from ball import Ball
 import math
-# dx = animal.velocity*math.cos(animal.theta)
-# 	dy = animal.velocity*math.sin(animal.theta)
+import time
+
+global score
+
+score = 0
 
 def setup():
 	pygame.init()
@@ -19,17 +22,18 @@ def main():
 
 	#Initialize player
 	playerOne = Player(canvasWidth/10, canvasHeight/2, 1)
-	playerTwo = Player(canvasWidth-canvasWidth/10, canvasHeight/2, 2)
 	ballOne = Ball()
 
 	spriteList.append(playerOne)
-	spriteList.append(playerTwo)
 	spriteList.append(ballOne)
+
 
 	while(True):
 		
 		#x*y rectangle
 		canvas.fill(BLACK)
+
+		displayText("Opponent Score: {}".format(score), WHITE, canvas)
 
 		#UPDATE
 		draw(canvas, spriteList)
@@ -37,6 +41,8 @@ def main():
 		updatePlayerOne(playerOne)
 		#updatePlayerTwo(playerTwo)
 		updateBall(canvas, ballOne, playerOne)
+
+		
 		
 		pygame.display.update()
 
@@ -49,7 +55,7 @@ def draw(canvas, spriteList):
 			pygame.draw.circle(canvas, RED, (int(sprite.x), int(sprite.y)), sprite.radius)
 
 def updateBall(canvas, ball, player):
-	
+	global score
 	#check if player hit ball
 	for i in range(player.x, player.x + player.width):
 		for j in range(player.y, player.y + player.height):
@@ -64,15 +70,21 @@ def updateBall(canvas, ball, player):
 
 	#Check for collision with bottom of screen
 	if(ball.y + dy >= canvasHeight - ball.radius):
-		ball.theta += 90
+		ball.theta += 45
 	#top of screen
 	elif(ball.y + dy <= 0 + ball.radius):
-		ball.theta += 90
+		ball.theta += 45
 	#Right side
 	elif(ball.x + dx >= canvasWidth - ball.radius):
-		ball.theta += 90
+		ball.theta += 45
+	#Goes off left
 	elif(ball.x + dx <= 0 + ball.radius):
-		ball.theta += 90
+		ball.x = canvasWidth/2
+		ball.y = canvasHeight/2
+		score += 1
+		player.x = canvasWidth/10
+		player.y = canvasHeight/2
+		time.sleep(1.5)
 	else:
 		ball.x += dx
 		ball.y += dy
@@ -90,8 +102,6 @@ def updatePlayerOne(player):
 		else:
 			player.velocity = 0
 
-
-
 	#Check if changing our height will put it over/under screen height
 	if(player.y + player.velocity <= 0):
 		player.y = 0
@@ -100,6 +110,14 @@ def updatePlayerOne(player):
 	else:
 		player.y += player.velocity
 
+def clearText(canvas):
+	pygame.draw.rect(canvas, (0, 0, 0), (canvasWidth/10, canvasHeight/10, 100, 30))
+
+def displayText(text, color, canvas):
+	clearText(canvas)
+	myfont = pygame.font.SysFont('Comic Sans MS', 30)
+	textsurface = myfont.render(text, False, color)
+	canvas.blit(textsurface, (canvasWidth/10, canvasHeight/10))
 
 if __name__ == '__main__':
 	main()
