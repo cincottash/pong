@@ -70,13 +70,13 @@ def updateBall(canvas, ball, player):
 
 	#Check for collision with bottom of screen
 	if(ball.y + dy >= canvasHeight - ball.radius):
-		ball.theta += 45
+		ball.theta *= -1
 	#top of screen
 	elif(ball.y + dy <= 0 + ball.radius):
-		ball.theta += 45
+		ball.theta *= -1
 	#Right side
 	elif(ball.x + dx >= canvasWidth - ball.radius):
-		ball.theta += 45
+		ball.theta += 180
 	#Goes off left
 	elif(ball.x + dx <= 0 + ball.radius):
 		ball.x = canvasWidth/2
