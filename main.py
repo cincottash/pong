@@ -95,7 +95,9 @@ def updatePlayerOne(player):
 
 	for event in pygame.event.get():	
 		if event.type == pygame.KEYDOWN:
-			if(event.key == pygame.K_UP):
+			if(event.key == pygame.K_RETURN):
+				exit(0)
+			elif(event.key == pygame.K_UP):
 				player.velocity = -1
 			elif(event.key == pygame.K_DOWN):
 				player.velocity = 1
